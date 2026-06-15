@@ -1,0 +1,14 @@
+[Unit]
+Description=Bluetooth Audio USB Relay
+After=bluetooth.service sound.target
+Wants=bluetooth.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStartPre=/bin/sleep 3
+ExecStart=/usr/local/bin/setup_audio_gadget.sh
+ExecStartPost=/usr/local/bin/bt_connect_headset.sh
+
+[Install]
+WantedBy=multi-user.target
