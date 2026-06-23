@@ -1,0 +1,11 @@
+[Unit]
+Description=USB Audio Gadget Setup
+After=local-fs.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/setup_audio_gadget.sh
+
+[Install]
+WantedBy=multi-user.target

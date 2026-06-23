@@ -1,14 +1,13 @@
 [Unit]
-Description=Bluetooth Audio USB Relay
-After=bluetooth.service sound.target
+Description=Bluetooth Audio Relay (event-driven)
+After=bluetooth.service usb-audio-gadget.service
 Wants=bluetooth.service
 
 [Service]
-Type=oneshot
-RemainAfterExit=yes
-ExecStartPre=/bin/sleep 3
-ExecStart=/usr/local/bin/setup_audio_gadget.sh
-ExecStartPost=/usr/local/bin/bt_connect_headset.sh
+Type=simple
+ExecStart=/usr/bin/python3 /usr/local/bin/bt_audio_relay.py
+Restart=on-failure
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
