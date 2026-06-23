@@ -32,6 +32,11 @@ echo 0x0104 > idProduct
 echo 0x0100 > bcdDevice
 echo 0x0200 > bcdUSB
 
+# Composite device signaling (Interface Association Descriptor)
+echo 0xEF > bDeviceClass
+echo 0x02 > bDeviceSubClass
+echo 0x01 > bDeviceProtocol
+
 mkdir -p strings/0x409
 echo "deadbeef12345678" > strings/0x409/serialnumber
 echo "BT Audio Relay"   > strings/0x409/manufacturer
