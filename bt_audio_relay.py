@@ -33,15 +33,15 @@ loaded_modules = {}
 
 
 def pactl(*args):
-    """Run a pactl command as the PulseAudio user."""
-    env = os.environ.copy()
-    env["XDG_RUNTIME_DIR"] = f"/run/user/{PULSE_UID}"
+    """Run a pactl command as the PulseAudio user, targeting the socket explicitly."""
+    server = f"unix:/run/user/{PULSE_UID}/pulse/native"
     result = subprocess.run(
-        ["sudo", "-u", PULSE_USER, "pactl"] + list(args),
-        env=env,
+        ["sudo", "-u", PULSE_USER, "pactl", f"--server={server}"] + list(args),
         capture_output=True,
         text=True
     )
+    if result.returncode != 0:
+        log.error(f"pactl {' '.join(args)} -> stderr: {result.stderr.strip()}")
     return result.stdout.strip(), result.returncode
 
 
