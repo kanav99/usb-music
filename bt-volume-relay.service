@@ -1,0 +1,13 @@
+[Unit]
+Description=Bluetooth Headset Volume Button Relay
+After=bluetooth.service bt-audio-relay.service
+Wants=bluetooth.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /usr/local/bin/bt_volume_relay.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
